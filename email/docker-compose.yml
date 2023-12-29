@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  email_backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - KAFKA_CLIENT_ID=${KAFKA_CLIENT_ID}
+      - KAFKA_BROKER=${KAFKA_BROKER}
+      - KAFKA_USERNAME=${KAFKA_USERNAME}
+      - KAFKA_PASSWORD=${KAFKA_PASSWORD}
+      - KAFKA_GROUP_ID=${KAFKA_GROUP_ID}
+      - KAFKA_TOPIC=${KAFKA_TOPIC}
+    
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "mailhog"
+    ports:
+      - "1025:1025"
+      - "8025:8025"
